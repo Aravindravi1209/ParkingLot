@@ -1,11 +1,21 @@
 package dtos;
 
 import models.EntryGate;
+import models.SpotType;
 import models.Vehicle;
 
 public class GenerateTicketRequestDto {
     private Vehicle vehicle;
     private EntryGate entryGate;
+    private SpotType spotType;
+
+    public SpotType getSpotType() {
+        return spotType;
+    }
+
+    public void setSpotType(SpotType spotType) {
+        this.spotType = spotType;
+    }
 
     private Long parkingLotId;
 

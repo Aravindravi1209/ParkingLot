@@ -35,4 +35,16 @@ public class TicketService {
         ticket.setParkingLot(parkingLot);
         return ticket;
     }
+
+    public Ticket updateTickets(Ticket ticket, Vehicle vehicle)
+    {
+        Ticket updatedTicket = ticketRepository.addTicket(ticket,vehicle);
+        return updatedTicket;
+    }
+
+    public Ticket deleteTickets(Ticket ticket)
+    {
+        Ticket deletedTicket = ticketRepository.deleteTicket(ticket);
+        return deletedTicket;
+    }
 }

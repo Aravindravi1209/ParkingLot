@@ -3,6 +3,10 @@ import Strategies.spotAssignmentStrategies.SpotAssignmentStrategy;
 import controllers.ParkingLotController;
 import controllers.TicketController;
 import dtos.*;
+import models.EntryGate;
+import models.SpotType;
+import models.Vehicle;
+import models.VehicleType;
 import repositories.ParkingLotRepository;
 import repositories.TicketRepository;
 import services.ParkingLotService;
@@ -48,5 +52,24 @@ public class Client {
         updateParkingLotRequestDto.setParkingLotId(1L);
         updateParkingLotRequestDto.setAddress("Arav's House");
         System.out.println(parkingLotController.updateAddress(updateParkingLotRequestDto));
+
+
+        TicketController ticketController = (TicketController)ObjectRegistry.get("ticketController");
+
+        GenerateTicketRequestDto generateTicketRequestDto = new GenerateTicketRequestDto();
+        generateTicketRequestDto.setParkingLotId(1L);
+        generateTicketRequestDto.setSpotType(SpotType.MEDIUM);
+        generateTicketRequestDto.setVehicle(new Vehicle("TN12AR1209", VehicleType.MEDIUM));
+        generateTicketRequestDto.setEntryGate(new EntryGate());
+
+        GenerateTicketResponseDto generateTicketResponseDto = ticketController.generateTicket(generateTicketRequestDto);
+        if(generateTicketResponseDto.getResponseStatusDto().equals(ResponseStatusDto.SUCCESS))
+        {
+            System.out.println(generateTicketResponseDto.getTicket());
+        }
+        else {
+            System.out.println("Ticket is invalid.");
+        }
+
     }
 }
