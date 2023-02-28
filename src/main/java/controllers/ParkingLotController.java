@@ -3,6 +3,7 @@ package controllers;
 import dtos.*;
 import models.ParkingFloor;
 import models.ParkingLot;
+import models.ParkingSpot;
 import services.ParkingLotService;
 
 import java.util.ArrayList;
@@ -45,6 +46,24 @@ public class ParkingLotController {
         );
         UpdateParkingLotResponseDto response = new UpdateParkingLotResponseDto();
         response.setParkingLot(updatedParkingLot);
+        response.setResponseStatusDto(ResponseStatusDto.SUCCESS);
+        return response;
+    }
+
+    public CreateParkingSpotResponseDto createParkingSpot(CreateParkingSpotRequestDto request)
+    {
+        if(request.getParkingFloor().getFloorNumber()<0)
+        {
+            CreateParkingSpotResponseDto response = new CreateParkingSpotResponseDto();
+            response.setResponseStatusDto(ResponseStatusDto.FAILURE);
+            return response;
+        }
+
+        ParkingSpot parkingSpot = parkingLotService.addParkingSpot(request.getParkingLotId(),
+                request.getParkingFloor().getFloorNumber(), request.getSpotType());
+
+        CreateParkingSpotResponseDto response = new CreateParkingSpotResponseDto();
+        response.setParkingSpot(parkingSpot);
         response.setResponseStatusDto(ResponseStatusDto.SUCCESS);
         return response;
     }
